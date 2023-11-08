@@ -2,7 +2,10 @@
 
 declare -A QUIZ_RESULTS
 
+NUMQUESTIONS=5
 TABLE_NUM=""
+USERNAME=""
+PASSWORD=""
 
 
 function main() {
@@ -16,11 +19,25 @@ function login(){
     read $MENU_CHOICE
         if $MENU_CHOICE == 1
             then
-                echo 'please enter your username'
-                read local $USERNAME
-                echo 'please enter your password'
-                read local $PASSWORD
-                teacherMenu $USERNAME $PASSWORD
+                # echo 'please enter your username'
+                # read local $USERNAME
+                # echo 'please enter your password'
+                # read local $PASSWORD
+                # teacherMenu $USERNAME $PASSWORD
+                until [[ $USERNAME =~ ^[[:alnum]]+$ ]]
+                do
+                    read -p "Please enter your username (must be lowercase letters and numbers)" USERNAME
+                    # error handling for username validation
+                    if [[ ! $USERNAME =~ ^[[alnum]]+$ ]]
+                    then
+                        echo "Invalid Username: only use numbers and letters"
+                    fi
+                done
+                until ((${#PASSWORD} >= 8 )) && [[ $PASSWORD =~ ^[[:alnum]]+$]]
+                do
+                    read -p "Please enter your password (must be at least eight charachters in lenght -letters and numbers only)" 
+                    
+
         elif $MENU_CHOICE == 2
             then
             echo 'please enter your table number'
@@ -96,7 +113,21 @@ TABLE_NUM=$1
 }
 
 function chooseArithOp(){
+    ARITH_OP = 0
+    until [ $ARITH_OP -gt 0 -a $ARITH_OP -le 4]
+    do
+        echo "Choose an operator"
+        echo "1. Addition"
+        echo "2. Subtraction"
+        echo "3. Multiplication"
+        echo "3. Division"
 
+        if [ $ARITH_OP -lt 1 -o $ARITH_OP -gt 4 ]
+        then
+            echo "$ARITH_OP is invalid, please try again! "
+            chooseArithOp
+        fi         
+    done 
 }
 
 function manageStudents() {
