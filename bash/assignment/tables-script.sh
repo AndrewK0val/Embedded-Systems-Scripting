@@ -36,7 +36,12 @@ function login(){
                 until ((${#PASSWORD} >= 8 )) && [[ $PASSWORD =~ ^[[:alnum]]+$]]
                 do
                     read -p "Please enter your password (must be at least eight charachters in lenght -letters and numbers only)" 
-                    
+                    if [[ ${#PASSWORD} -lt 8 || ! $PASSWORD =~ ^[[:alnum:]]+$ ]]
+                    then
+                    echo "Invalid Password, please try again (make sure its at least 8 charachters long and contains no letters or numbers)"
+                    fi
+                done
+                echo "you are logged in as: "
 
         elif $MENU_CHOICE == 2
             then
@@ -90,25 +95,66 @@ function studentMenu() {
 
 function learnTables(){
     echo 'which type of table would you like to learn?'
-    read $ARITH_OP
-        case $ARITH_OP in
-            1) echo 'addition'
-            ;;
-            2) echo 'subtraction'
-            ;;
-            3) echo 'multiplication'
-            ;;
-            4) echo 'division'
-            ;;
-            *) echo 'please enter a valid option'
-            learnTables
-            ;;
-        esac
-    
+
+    for ((i=0;i<$NUMQUESTIONS;i++))
+    do
+        read $ARITH_OP
+            case $ARITH_OP in
+                1) echo "$((i+1))"
+                ;;
+                2) echo 'subtraction'
+                ;;
+                3) echo 'multiplication'
+                ;;
+                4) echo 'division'
+                ;;
+                *) echo 'please enter a valid option'
+                learnTables
+                ;;
+            esac
+        if [ $USER_ANS -eq $ANS ]
+        then
+            echo "Good job, do you want a medal for that?"
+        else
+            echo "not good enough, maybe try harder next time" 
+        fi
+    done
 }
 
 function takeQuiz(){
-TABLE_NUM=$1
+    TABLE_NUM=$1
+    for((i=0;i<$NUMQUESTIONS;i++))
+    do
+        ARITH_OP=$((RANDOM%4+1))
+
+        case $ARITH_OP in
+            1)
+                echo "$((i+1)):"
+                QUIZNUM=$((RANDOM%12+1))
+                ANS=$((NUMBER+QUIZNUM))
+                echo "$NUMBER + $QUIZNUM = ?"
+            ;;
+            2)
+                echo "$((i+1)):"
+                QUIZNUM=$((RANDOM%12+1))
+                ANS=$((NUMBER-QUIZNUM))
+                echo "$NUMBER - $QUIZNUM = ?"
+            ;;
+            3)
+                echo "$((i+1)):"
+                QUIZNUM=$((RANDOM%12+1))
+                ANS=$((NUMBER/QUIZNUM))
+                echo "$NUMBER / $QUIZNUM = ?"
+            ;;
+            4)
+                echo "$((i+1)):"
+                QUIZNUM=$((RANDOM%12+1))
+                ANS=$((NUMBER*QUIZNUM))
+                echo "$NUMBER x $QUIZNUM = ?"
+            ;;
+        esac
+    done
+
 
 }
 
