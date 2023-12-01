@@ -13,17 +13,15 @@ function main() {
     login
 }
 
+
+
+
 function login(){
-    MENU_CHOICE=''
+    MENU_CHOICE = 0
     echo -e 'are you a teacher or a student? \n 1. teacher \n 2. student' 
     read $MENU_CHOICE
         if $MENU_CHOICE == 1
             then
-                # echo 'please enter your username'
-                # read local $USERNAME
-                # echo 'please enter your password'
-                # read local $PASSWORD
-                # teacherMenu $USERNAME $PASSWORD
                 until [[ $USERNAME =~ ^[[:alnum]]+$ ]]
                 do
                     read -p "Please enter your username (must be lowercase letters and numbers)" USERNAME
@@ -33,7 +31,8 @@ function login(){
                         echo "Invalid Username: only use numbers and letters"
                     fi
                 done
-                until ((${#PASSWORD} >= 8 )) && [[ $PASSWORD =~ ^[[:alnum]]+$]]
+
+                until ((${#PASSWORD} >= 8 )) && [[ $PASSWORD =~ ^[[:alnum]]+$ ]]
                 do
                     read -p "Please enter your password (must be at least eight charachters in lenght -letters and numbers only)" 
                     if [[ ${#PASSWORD} -lt 8 || ! $PASSWORD =~ ^[[:alnum:]]+$ ]]
@@ -154,8 +153,6 @@ function takeQuiz(){
             ;;
         esac
     done
-
-
 }
 
 function chooseArithOp(){
@@ -186,10 +183,10 @@ function manageStudents() {
 
 }
 
-function addStudent() {
+# function addStudent() {
     
 
-}
+# }
 
 function updateStudent() {
     TABLE_TO_UPDATE=$1
