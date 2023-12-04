@@ -1,0 +1,7 @@
+NUM     Op     Num2     ANS      USR      TF
+						
+						
+						
+						
+						
+						
