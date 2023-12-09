@@ -9,10 +9,18 @@ request = urllib.request.Request(urlLotto, None, headers)
 response = urllib.request.urlopen(request)
 data = response.read().decode('utf-8')
 
-print(data) # print raw data in XML format - for testing only - remove before submission
+# print(data) # print raw data in XML format - for testing only - remove before submission
 
 print("Lotto Draw Results\n")
-lottoDrawDate = re.findall("<DrawDate>(.*)</DrawDate>", data, re.DOTALL)
-lottoResults = re.findall("<Number>(.*?)</Number>", data, re.DOTALL)
-for num in lottoResults:
-    print(num, end=" ")
+
+for i in range(n):
+
+    lottoDrawDate = re.findall("<DrawDate>(.*)</DrawDate>", data, re.DOTALL)
+    lottoResults = re.findall("<Number>(.*?)</Number>", data, re.DOTALL)
+
+    numbers = ", ".join(lottoResults)
+
+
+    print("Draw date: ", lottoDrawDate, "Draw number: ", numbers)
+# for num in lottoResults:
+#     print(num, end=" ")
